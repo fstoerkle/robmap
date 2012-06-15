@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test for svg2vmlpaths.js</title>
+    <script src="../lib/svg2vmlpaths.js"></script>
+    <script src="./testlib.js"></script>
+</head>
+<body>
+<p id="result"></p>
+<script>
+/*
+SVG
+    m/M : relative/absolute moveto
+    l/L : relative/absolute lineto
+    h/H : relative/absolute horizontal lineto
+    v/V : relative/absolute vertical lineto
+    z/Z : close
+
+VML
+    m   : absolute moveto
+    l   : absolute lineto
+    x   : close
+*/
+var SVG = [ 'm', 1, 2, 'M', 3, 4, 'l', 5, 6, 'L', 7, 8,
+            'h', 10,   'H', 9,    'v', 12,   'V', 11,   'z' ],
+    expectedVML = [ 'm',  1,  2, 'm',  3,  4, 'l',  8, 10, 'l',  7,  8, 
+                    'l', 17,  8, 'l',  9,  8, 'l',  9, 20, 'l',  9, 11, 'x' ];
+
+runTests(function() {
+    assertEqualArray(expectedVML, convertSvg2Vml(SVG));
+});
+
+</script>
+</body>
+</html>
